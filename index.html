@@ -73,15 +73,15 @@
 	    </style>
 
         <script>
-            function RemovePiece(x, y)
-            {
-                Document.getElementById(x + "x" + y).innerHTML = "";
-            }
+	        function RemovePiece(x, y)
+	        {
+	            document.getElementById(x + "x" + y).innerHTML = "";
+	        }
 
-            function AddPiece(x, y, playerName)
-            {
-                Document.getElementById(x + "x" + y).innerHTML = "<table><td><div class='" + playerName + "'></div></td></table>";
-            }
+	        function AddPiece(x, y, playerName)
+	        {
+	            document.getElementById(x + "x" + y).innerHTML = "<div class='" + playerName + "'></div></td></table>";
+	        }
         </script>
 
         <table id="tblBoard" class="Board">
@@ -129,11 +129,7 @@
                 </td>
                 <td>
                     <div id="3x2" class="Normal">
-                        <table>
-                            <td>
-                                <div class='Player1'></div>
-                            </td>
-                        </table>
+                        <div class='Player1'></div>
                     </div>
                 </td>
             </tr>
@@ -182,7 +178,7 @@
                 </td>
             </tr>
         </table>
-        <button onclick="AddPiece(3, 1, 'Player1')">Add</button>
-        <button onclick="RemovePiece(3, 1)">Remove</button>
+        <button onclick="AddPiece(3, 2, 'Player1')">Add</button>
+        <button onclick="RemovePiece(3, 2)">Remove</button>
     </body>
 </html>
