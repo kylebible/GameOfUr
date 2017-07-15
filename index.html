@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -12,16 +13,15 @@
     </head>
     <body>
         <style>
-            td
-            {
+            td {
 	            width: 100px;
 	            height: 100px;
             }
 
 		    .Board
 		    {
-		        width: 50%;
-		        height: 75%;
+		        width: 310px;
+		        height: 310px;
 		        margin: auto;
 		    }
 
@@ -48,100 +48,141 @@
             width: 100%;
             height: 100%
 		    }
+
+		    .Player1
+		    {
+		        display: table;
+		        border-radius: 50%;
+		        background-color: blue;
+		        width: 50%;
+		        height: 50%;
+				position: absolute;
+				left: 25%;
+				top: 25%;
+			}
+
+		    .Player2
+		    {
+		        display: table;
+		        border-radius: 50%;
+		        background-color: red;
+		        width: 50%;
+		        height: 50%;
+	            position: absolute;
+	            left: 25%;
+		        top: 25%;
+		    }
 	    </style>
+
+        <script>
+	        function RemovePiece(x, y)
+	        {
+	            document.getElementById(x + "x" + y).innerHTML = "";
+	        }
+
+	        function AddPiece(x, y, playerName)
+	        {
+	            document.getElementById(x + "x" + y).innerHTML = "<div class='" + playerName + "'></div></td></table>";
+	        }
+        </script>
 
         <table id="tblBoard" class="Board">
             <tr>
                 <td>
-                    <div id="0x0" class="Reroll"/>
+                    <div id="0x0" class="Reroll">
+                    </div>
                 </td>
                 <td>
-                    <div id="0x1" class="Normal"/>
+                    <div id="0x1" class="Normal">
+                    </div>
                 </td>
                 <td>
-                    <div id="0x2" class="Reroll"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div id="1x0" class="Normal"/>
-                </td>
-                <td>
-                    <div id="1x1" class="Safe"/>
-                </td>
-                <td>
-                    <div id="1x2" class="Normal"/>
+                    <div id="0x2" class="Reroll"></div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="2x0" class="Normal"/>
+                    <div id="1x0" class="Normal"></div>
                 </td>
                 <td>
-                    <div id="2x1" class="Normal"/>
+                    <div id="1x1" class="Safe"></div>
                 </td>
                 <td>
-                    <div id="2x2" class="Normal"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div id="3x0" class="Normal"/>
-                </td>
-                <td>
-                    <div id="3x1" class="Normal"/>
-                </td>
-                <td>
-                    <div id="3x2" class="Normal"/>
+                    <div id="1x2" class="Normal"></div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="4x0" />
+                    <div id="2x0" class="Normal"></div>
                 </td>
                 <td>
-                    <div id="4x1" class="Safe"/>
+                    <div id="2x1" class="Normal"></div>
                 </td>
                 <td>
-                    <div id="4x2" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div id="5x0" />
-                </td>
-                <td>
-                    <div id="5x1" class="Normal"/>
-                </td>
-                <td>
-                    <div id="5x2" />
+                    <div id="2x2" class="Normal"></div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="6x0" class="Reroll"/>
+                    <div id="3x0" class="Normal"></div>
                 </td>
                 <td>
-                    <div id="6x1" class="Normal"/>
+                    <div id="3x1" class="Normal"></div>
                 </td>
                 <td>
-                    <div id="6x2" class="Reroll"/>
+                    <div id="3x2" class="Normal">
+                        <div class='Player1'></div>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="7x0" class="Normal"/>
+                    <div id="4x0" ></div>
                 </td>
                 <td>
-                    <div id="7x1" class="Normal"/>
+                    <div id="4x1" class="Safe"></div>
                 </td>
                 <td>
-                    <div id="7x2" class="Normal"/>
+                    <div id="4x2" ></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="5x0" ></div>
+                </td>
+                <td>
+                    <div id="5x1" class="Normal"></div>
+                </td>
+                <td>
+                    <div id="5x2" ></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="6x0" class="Reroll"></div>
+                </td>
+                <td>
+                    <div id="6x1" class="Normal"></div>
+                </td>
+                <td>
+                    <div id="6x2" class="Reroll"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="7x0" class="Normal"></div>
+                </td>
+                <td>
+                    <div id="7x1" class="Normal"></div>
+                </td>
+                <td>
+                    <div id="7x2" class="Normal"></div>
                 </td>
             </tr>
         </table>
-        <button class="btn btn-primary">Button</button>
-    <script
+        <button onclick="AddPiece(3, 2, 'Player1')">Add</button>
+        <button onclick="RemovePiece(3, 2)">Remove</button>
+        <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
