@@ -4,6 +4,8 @@
         <title></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="dice_roll.js"></script>
+
     </head>
     <body>
         <style>
@@ -21,13 +23,20 @@
 		    }
 
 		    .Normal
-		    {
-		        background-color: gray;
-		        border: 1px solid black;
-		        width: 100%;
-		        height: 100%;
-		        position: relative;
-		    }
+            {
+                background-color: gray;
+                border: 1px solid black;
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
+
+            .Home   
+            {
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
 
 		    .Reroll
 		    {
@@ -73,14 +82,10 @@
 	    </style>
 
         <script>
-	        function RemovePiece(x, y)
+	        function MovePiece(x, y, playerName, elementName)
 	        {
-	            document.getElementById(x + "x" + y).innerHTML = "";
-	        }
-
-	        function AddPiece(x, y, playerName)
-	        {
-	            document.getElementById(x + "x" + y).innerHTML = "<div class='" + playerName + "'></div></td></table>";
+	            document.getElementById(elementName).remove();
+                document.getElementById(x + "x" + y).innerHTML = "<div class='" + playerName + "' id='" + elementName + "'></div>";
 	        }
         </script>
 
@@ -129,19 +134,32 @@
                 </td>
                 <td>
                     <div id="3x2" class="Normal">
-                        <div class='Player1'></div>
+                        
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="4x0" ></div>
+                    <div id="4x0" class="Home">
+                    <div class="Player1" id="blue1"></div>
+                    <div class="Player1" id="blue2"></div>
+                    <div class="Player1" id="blue3"></div>
+                    <div class="Player1" id="blue4"></div>
+                    <div class="Player1" id="blue5"></div>
+                    </div>
                 </td>
                 <td>
                     <div id="4x1" class="Safe"></div>
                 </td>
                 <td>
-                    <div id="4x2" ></div>
+                    <div id="4x2" class="Home" >
+
+                    <div class="Player2" id="red1"></div>
+                    <div class="Player2" id="red2"></div>
+                    <div class="Player2" id="red3"></div>
+                    <div class="Player2" id="red4"></div>
+                    <div class="Player2" id="red5"></div>   
+                    </div> 
                 </td>
             </tr>
             <tr>
@@ -178,7 +196,5 @@
                 </td>
             </tr>
         </table>
-        <button onclick="AddPiece(3, 2, 'Player1')">Add</button>
-        <button onclick="RemovePiece(3, 2)">Remove</button>
     </body>
 </html>
