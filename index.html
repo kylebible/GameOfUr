@@ -5,81 +5,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="dice_roll.js"></script>
+        <link rel="stylesheet" href="style.css">
+
 
     </head>
     <body>
-        <style>
-		    td
-		    {
-		        width: 100px;
-		        height: 100px;
-		    }
-
-		    .Board
-		    {
-		        width: 310px;
-		        height: 310px;
-		        margin: auto;
-		    }
-
-		    .Normal
-            {
-                background-color: gray;
-                border: 1px solid black;
-                width: 100%;
-                height: 100%;
-                position: relative;
-            }
-
-            .Home   
-            {
-                width: 100%;
-                height: 100%;
-                position: relative;
-            }
-
-		    .Reroll
-		    {
-		        background-color: orange;
-		        border: 1px solid black;
-		        width: 100%;
-		        height: 100%;
-		        position: relative;
-		    }
-
-		    .Safe
-		    {
-		        background-color: green;
-		        border: 1px solid black;
-		        width: 100%;
-	            height: 100%;
-	            position: relative;
-		    }
-
-		    .Player1
-		    {
-		        display: table;
-		        border-radius: 50%;
-		        background-color: blue;
-		        width: 50%;
-		        height: 50%;
-				position: absolute;
-				left: 25%;
-				top: 25%;
-			}
-
-		    .Player2
-		    {
-		        display: table;
-		        border-radius: 50%;
-		        background-color: red;
-		        width: 50%;
-		        height: 50%;
-	            position: absolute;
-	            left: 25%;
-		        top: 25%;
-		    }
-	    </style>
 
         <script>
 	        function MovePiece(x, y, playerName, elementName)
@@ -88,6 +18,17 @@
                 document.getElementById(x + "x" + y).innerHTML = "<div class='" + playerName + "' id='" + elementName + "'></div>";
 	        }
         </script>
+
+        <div id='box_and_button'>
+      
+         <p id="placeholder1"></p>
+         
+         <p id="placeholder2"></p>
+
+         <button id='roll' onclick="print()">Roll the dice!</button>
+
+
+        </div>  
 
         <table id="tblBoard" class="Board">
             <tr>
