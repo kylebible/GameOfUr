@@ -11,12 +11,13 @@ var GameSpace = function(coordinate) {
     this.isReRoll = false
 }
 
-var Player = function(gameSpace,player) {
+var Player = function(gameSpace,player,home) {
     this.pieces = {}
     this.score = 0
     this.path = []
     this.finishedPieces = 0
     this.player = player
+    this.home = home
 }
 
 var Game = function() {
@@ -47,8 +48,8 @@ var Game = function() {
     }
 
     Game.prototype.createPlayers = function() {
-        this.player1 = new Player(this.gameBoard[4][0],1)
-        this.player2 = new Player(this.gameBoard[4][2],2)
+        this.player1 = new Player(this.gameBoard[4][0],1,"4x0")
+        this.player2 = new Player(this.gameBoard[4][2],2,"4x2")
         var x=4, separate=true
         for(var i=1;i<=16;i++) {
             if (separate) {
@@ -79,53 +80,72 @@ var Game = function() {
         return this
     }
 
-    Game.prototype.rollDice = function() {
+    Game.prototype.rollDice = function(value) {
         console.log("roll")
-        roll = 1
+        roll = value
+        if (roll == 0) {
+            this.switchTurns();
+            return;
+        }
         //dicelogic goes here
         //player selects piece to move
-        $("Player"+this.playerTurn.player).click(function() { selectedPiece = $(this).attr('id')
-            if (selectedPiece && selectedPiece.ownedBy == this.playerTurn) {
+        var self = this
+        console.log("turn: ",self.playerTurn)
+        $(".Player"+self.playerTurn.player).click(function() { selectedPiece = self.playerTurn.pieces[$(this).attr('id')]
+            console.log($(this).attr('id'),selectedPiece)
+            if (selectedPiece && selectedPiece.ownedBy == self.playerTurn) {
                 if (selectedPiece.pathIndex+roll>=15) { //if they roll over the end
                     if(selectedPiece.pathIndex+roll==15) { //if they roll the right amount
-                        this.playerTurn.path[selectedPiece.pathIndex].currentPiece = null
+                        self.playerTurn.path[selectedPiece.pathIndex].currentPiece = null
                         selectedPiece.pathIndex+=roll
-                        this.playerTurn.finishedPieces+=1
-                        if (this.finishedPieces>=5) {
+                        self.playerTurn.finishedPieces+=1
+                        if (self.finishedPieces>=5) {
                             //win condition
-                            console.log("player"+this.playerTurn.player+"wins")
+                            console.log("player"+self.playerTurn.player+"wins")
                         }
                     }
                     else {
                         //you need to roll exactly x to remove the game piece
                     }
                 }
-                if (this.playerTurn.path[selectedPiece.pathIndex+roll].currentPiece.ownedBy != this.playerTurn) {
-                    if (this.playerTurn.path[selectedPiece.pathIndex+roll].isSafe) {
-                        //space is safe
+                console.log(roll)
+                console.log(self.playerTurn.path[selectedPiece.pathIndex+roll])
+                if (self.playerTurn.path[selectedPiece.pathIndex+roll].currentPiece) {
+                    if (self.playerTurn.path[selectedPiece.pathIndex+roll].currentPiece.ownedBy != self.playerTurn) {
+                        if (self.playerTurn.path[selectedPiece.pathIndex+roll].isSafe) {
+                            //space is safe
+                        }
+                        else {
+                            console.log('jump',self.playerTurn.path[selectedPiece.pathIndex+roll].currentPiece.ownedBy.home)
+                        //remove other player piece, replace with currplayer piece
+
+                            document.getElementById(selectedPiece.name).remove();
+                            document.getElementById(self.playerTurn.path[selectedPiece.pathIndex+roll].currentPiece.name).remove();
+                            document.getElementById(self.playerTurn.path[selectedPiece.pathIndex+roll].coordinate).innerHTML = "<div class='Player" + self.playerTurn.player + "' id='" + selectedPiece.name + "'></div>";
+                            document.getElementById(self.playerTurn.path[selectedPiece.pathIndex+roll].currentPiece.ownedBy.home).innerHTML = "<div class='Player" + self.playerTurn.path[selectedPiece.pathIndex+roll].currentPiece.ownedBy.player + "' id='" + selectedPiece.name + "'></div>";
+                            self.playerTurn.path[selectedPiece.pathIndex+roll].currentPiece.pathIndex = 0
+                            selectedPiece.pathIndex+=roll
+                            self.playerTurn.path[selectedPiece.pathIndex].currentPiece = selectedPiece
+                            self.switchTurns()
+                        }
                     }
-                    else {
-                    //remove other player piece, replace with currplayer piece
-                    this.playerTurn.path[selectedPiece.pathIndex+roll].currentPiece.pathIndex = 0
-                    selectedPiece.pathIndex+=roll
-                    this.playerTurn.path[selectedPiece.pathIndex].currentPiece = selectedPiece
+                    else if (self.playerTurn.path[selectedPiece.pathIndex+roll].currentPiece.ownedBy == self.playerTurn) {
+                        return
                     }
-                }
-                else if (this.playerTurn.path[selectedPiece.pathIndex+roll].currentPiece.ownedBy == this.playerTurn) {
-                //can't do it, one of your pieces is there
                 }
                 else {
                     //no players on space, move piece
-                    this.playerTurn.path[selectedPiece.pathIndex].currentPiece = null
+                    console.log("moving piece")
+                    self.playerTurn.path[selectedPiece.pathIndex].currentPiece = null
                     selectedPiece.pathIndex+=roll
-                    this.playerTurn.path[selectedPiece.pathIndex].currentPiece = selectedPiece
-                    document.getElementById()
-                    function MovePiece(x, y, playerName, elementName)
-                    {
-                        document.getElementById(selectedPiece.name).remove();
-                        document.getElementById(this.playerTurn.path[selectedPiece.pathIndex].coordinate).innerHTML = "<div class='player" + this.playerTurn.player + "' id='" + selectedPiece.name + "'></div>";
+                    self.playerTurn.path[selectedPiece.pathIndex].currentPiece = selectedPiece
+                    console.log(self.playerTurn.path[selectedPiece.pathIndex].coordinate)
+                    document.getElementById(selectedPiece.name).remove();
+                    document.getElementById(self.playerTurn.path[selectedPiece.pathIndex].coordinate).innerHTML = "<div class='Player" + self.playerTurn.player + "' id='" + selectedPiece.name + "'></div>";
+                    if (!(selectedPiece.pathIndex==4 || selectedPiece.pathIndex==14)) {
+                        self.switchTurns()
                     }
-                }
+                 }
             }
             else {
                 //no piece on space or not your piece
@@ -135,22 +155,39 @@ var Game = function() {
         
     }
 
+    Game.prototype.switchTurns = function() {
+        if (this.playerTurn == this.player1) {
+            this.playerTurn = this.player2
+        }
+        else {
+            this.playerTurn = this.player1
+        }
+        console.log()
+        //TODO: display player turn
+        document.getElementById("turn").innerHTML = "Player "+this.playerTurn.player+"'s Turn!"
+    }
+
 
 
 }
+
+//TODO: Account for a 0 roll
 
 
 
 var myGame = new Game();
 
 myGame.setGameBoard().createPlayers()
+myGame.playerTurn = myGame.player1
+console.log(myGame.playerTurn)
 
-$("button").click(function() {
-    console.log("button clicked")
-    myGame.rollDice()
+$("#roll").click(function() {
+    d1 = $('#placeholder1').text()
+    d2 = $('#placeholder2').text()
+    myGame.rollDice(Number(d1)+Number(d2))
 })
 
-myGame.playerTurn = myGame.player1
+
 // console.log(myGame.gameBoard)
 // console.log(myGame.player1.path)
 // console.log(myGame.playerTurn.pieces)
