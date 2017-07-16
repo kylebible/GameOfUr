@@ -90,11 +90,6 @@
                 document.getElementById(x + "x" + y).innerHTML = "<div class='" + playerName + "' id='" + elementName + "'></div>";
 	        }
         </script>
-
-	        function AddPiece(x, y, playerName)
-	        {
-	            document.getElementById(x + "x" + y).innerHTML = "<div class='" + playerName + "'></div></td></table>";
-	        }
         </script>
 
         <table id="tblBoard" class="Board">
@@ -204,8 +199,6 @@
                 </td>
             </tr>
         </table>
-        <button onclick="AddPiece(3, 2, 'Player1')">Add</button>
-        <button onclick="RemovePiece(3, 2)">Remove</button>
         <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="

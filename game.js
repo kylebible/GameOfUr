@@ -1,4 +1,5 @@
-var GamePiece = function(pathIndex,player) {
+var GamePiece = function(pathIndex,player,name) {
+    this.name = name
     this.pathIndex = pathIndex
     this.ownedBy = player
 }
@@ -72,8 +73,8 @@ var Game = function() {
             }
         }
         for (var count=1;count<=5;count++) {
-            this.player1.pieces["blue"+count] = new GamePiece(0,this.player1)
-            this.player2.pieces["red"+count] = new GamePiece(0,this.player2)
+            this.player1.pieces["blue"+count] = new GamePiece(0,this.player1,"blue"+count)
+            this.player2.pieces["red"+count] = new GamePiece(0,this.player2,"red"+count)
         }
         return this
     }
@@ -118,6 +119,12 @@ var Game = function() {
                     this.playerTurn.path[selectedPiece.pathIndex].currentPiece = null
                     selectedPiece.pathIndex+=roll
                     this.playerTurn.path[selectedPiece.pathIndex].currentPiece = selectedPiece
+                    document.getElementById()
+                    function MovePiece(x, y, playerName, elementName)
+                    {
+                        document.getElementById(selectedPiece.name).remove();
+                        document.getElementById(this.playerTurn.path[selectedPiece.pathIndex].coordinate).innerHTML = "<div class='player" + this.playerTurn.player + "' id='" + selectedPiece.name + "'></div>";
+                    }
                 }
             }
             else {
